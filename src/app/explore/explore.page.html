@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>explore</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<h2>You are login as {{ sessionService.getCurrentCustomer().username }}</h2>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-button expand="full" (click)="logout()">
+      <ion-icon slot="start" name="exit"></ion-icon>
+      Logout
+    </ion-button>
+  </ion-toolbar>
+</ion-content>

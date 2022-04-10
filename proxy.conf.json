@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "http://localhost:8080/GP14-rws/Resources",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
