@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Create Customer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-item color="dark">
+    <ion-label position="floating">Username</ion-label>
+    <ion-input type="text" id="username" name="username" [(ngModel)]="customer.username" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="text" id="password" name="password" [(ngModel)]="customer.password" required>
+    </ion-input>              
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="text" id="email" name="email" [(ngModel)]="customer.email" required>
+    </ion-input>              
+  </ion-item>
+
+
+
+  <ion-item color="medium" class="ion-text-center">
+    <ion-label>Select Subscription Plan</ion-label>
+  </ion-item>
+
+  <ion-button
+    color="medium"
+    expand="block"
+    fill="outline"
+    [routerLink]="['/createNewCustomer']"
+    >Create Account</ion-button
+  >
+</ion-content>
+
+

@@ -19,6 +19,10 @@ const routes: Routes = [
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'createNewCustomer',
+    loadChildren: () => import('./create-new-customer/create-new-customer.module').then( m => m.CreateNewCustomerPageModule),
+  }
 ];
 @NgModule({
   imports: [

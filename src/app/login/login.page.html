@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-toolbar color="danger">
+  <ion-toolbar color="dark">
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="danger">
-  <ion-item color="danger">
+<ion-content color="dark">
+  <ion-item color="dark">
     <ion-label position="floating">Username</ion-label>
     <ion-input [(ngModel)]="username" type="text" required></ion-input>
   </ion-item>
 
-  <ion-item color="danger">
+  <ion-item color="dark">
     <ion-label position="floating">Password</ion-label>
     <ion-input [(ngModel)]="password" type="text" required></ion-input>
   </ion-item>
@@ -25,15 +25,15 @@
     Signin
   </ion-button>
 
-  <ion-item color="danger" class="ion-text-center">
+  <ion-item color="medium" class="ion-text-center">
     <ion-label>Or</ion-label>
   </ion-item>
 
   <ion-button
-    color="dark"
+    color="medium"
     expand="block"
     fill="outline"
-    [routerLink]="['/signup']"
+    [routerLink]="['/createNewCustomer']"
     >Create Account</ion-button
   >
 </ion-content>
