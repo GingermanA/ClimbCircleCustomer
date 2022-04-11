@@ -1,16 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>explore</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<h2>You are login as {{ sessionService.getCurrentCustomer().username }}</h2>
-
-<ion-content>
-  <ion-toolbar>
-    <ion-button expand="full" (click)="logout()">
+    <ion-button slot="end" (click)="logout()">
       <ion-icon slot="start" name="exit"></ion-icon>
       Logout
     </ion-button>
   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides class="gym-slider" slidesPerView="2">
+    <ion-slide *ngFor="let gym of gyms">
+      <ion-card routerLink="/gyms/{{gym.gymId}}">
+        <!-- <img src="assets/img/{{img}}" class="gym-img" /> -->
+        <ion-card-title>{{gym.gymName}}</ion-card-title>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
