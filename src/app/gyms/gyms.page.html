@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{gym?.gymName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Address: {{gym?.address}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Operating Hours: {{gym?.operatingHours}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contact Number: {{gym?.contactNumber}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-segment value="routes" [(ngModel)]="type">
+    <ion-segment-button value="routes">
+      <ion-label>Routes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="slots">
+      <ion-label>Slots</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="type">
+    <ion-datetime presentation="date" *ngSwitchCase="'slots'"> </ion-datetime>
+  </div>
+</ion-content>

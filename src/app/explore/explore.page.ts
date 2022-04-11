@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../services/session.service';
+import { GymService } from '../services/gym.service';
+import { Gym } from '../models/gym';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +10,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
-  constructor(private sessionService: SessionService, private router: Router) {}
+  images = ['1.jpg', '2.jpg', '3.jpg'];
+  gyms: Gym[];
 
-  ngOnInit() {}
+  constructor(
+    private sessionService: SessionService,
+    private gymService: GymService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.gymService.getAllGyms().subscribe({
+      next: (response) => {
+        this.gyms = response;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 
   logout() {
     this.sessionService.setIsLogin(false);

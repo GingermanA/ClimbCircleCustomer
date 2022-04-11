@@ -1,3 +1,5 @@
+import { Gymslot } from './gymslot';
+
 export class Customer {
   customerId: number | undefined;
   username: string | undefined;
@@ -5,6 +7,7 @@ export class Customer {
   email: string | undefined;
   numOfPassesLeft: number | undefined;
   expiryDate: Date | undefined;
+  gymSlots: Gymslot[] | undefined;
 
   constructor(
     customerId?: number,

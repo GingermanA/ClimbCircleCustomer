@@ -22,7 +22,17 @@ const routes: Routes = [
   {
     path: 'createNewCustomer',
     loadChildren: () => import('./create-new-customer/create-new-customer.module').then( m => m.CreateNewCustomerPageModule),
-  }
+  },
+  {
+    path: 'gyms',
+    loadChildren: () =>
+      import('./gyms/gyms.module').then((m) => m.GymsPageModule),
+  },
+  {
+    path: 'gyms/:id',
+    loadChildren: () =>
+      import('./gyms/gyms.module').then((m) => m.GymsPageModule),
+  },
 ];
 @NgModule({
   imports: [
