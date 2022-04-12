@@ -14,28 +14,26 @@
   <ion-item color="dark">
     <ion-label position="floating">Password</ion-label>
     <ion-input type="text" id="password" name="password" [(ngModel)]="customer.password" required>
-    </ion-input>              
+    </ion-input>
   </ion-item>
 
   <ion-item color="dark">
     <ion-label position="floating">Email</ion-label>
     <ion-input type="text" id="email" name="email" [(ngModel)]="customer.email" required>
-    </ion-input>              
+    </ion-input>
+
   </ion-item>
 
-
-
-  <ion-item color="medium" class="ion-text-center">
+  <ion-item color="dark">
     <ion-label>Select Subscription Plan</ion-label>
+    <ion-select placeholder="Select One Subscription Plan" id="subscriptionPlan" name="subscriptionPlan"
+      #category="ngModel" [(ngModel)]="subscriptionPlanId" required="true">
+      <ion-select-option *ngFor="let subscriptionPlan of subscriptionPlans"
+        value="{{subscriptionPlan.subscriptionPlanId}}">{{subscriptionPlan.name}}
+      </ion-select-option>
+    </ion-select>
   </ion-item>
 
-  <ion-button
-    color="medium"
-    expand="block"
-    fill="outline"
-    [routerLink]="['/createNewCustomer']"
-    >Create Account</ion-button
-  >
+  <ion-button color="medium" expand="block" fill="outline" [routerLink]="['/createNewCustomer']">Make Payment
+  </ion-button>
 </ion-content>
-
-
