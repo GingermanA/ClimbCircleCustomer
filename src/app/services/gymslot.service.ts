@@ -33,6 +33,12 @@ export class GymslotService {
       .pipe(catchError(this.handleError));
   }
 
+  getGymSlotsForGym(gymId: number, date: string): Observable<Gymslot[]> {
+    return this.httpClient
+      .get<Gymslot[]>(this.baseUrl + '/retrieveGymSlots/' + gymId + '/' + date)
+      .pipe(catchError(this.handleError));
+  }
+
   getGymSlotsForCustomer(): Observable<Gymslot[]> {
     return this.httpClient
       .get<Gymslot[]>(

@@ -35,12 +35,6 @@ export class GymService {
       .pipe(catchError(this.handleError));
   }
 
-  getGymSlots(gymId: number, date: string): Observable<Gymslot[]> {
-    return this.httpClient
-      .get<Gymslot[]>(this.baseUrl + '/retrieveGymSlots/' + gymId + '/' + date)
-      .pipe(catchError(this.handleError));
-  }
-
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 

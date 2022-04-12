@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { GymService } from '../services/gym.service';
+import { GymslotService } from '../services/gymslot.service';
 import { Gym } from '../models/gym';
 import { Gymslot } from '../models/gymslot';
 
@@ -22,7 +23,8 @@ export class GymsPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private gymService: GymService
+    private gymService: GymService,
+    private gymSlotService: GymslotService
   ) {
     this.type = 'slots';
   }
@@ -39,7 +41,7 @@ export class GymsPage implements OnInit {
       },
     });
 
-    this.gymService.getGymSlots(this.gymId, this.currDate).subscribe({
+    this.gymSlotService.getGymSlotsForGym(this.gymId, this.currDate).subscribe({
       next: (response) => {
         this.gymSlots = response;
         console.log(this.gymSlots);
@@ -54,7 +56,7 @@ export class GymsPage implements OnInit {
     this.selectedSlot = 0;
     //console.log(date.detail.value.substring(0, 10));
     this.currDate = date.detail.value.substring(0, 10);
-    this.gymService.getGymSlots(this.gymId, this.currDate).subscribe({
+    this.gymSlotService.getGymSlotsForGym(this.gymId, this.currDate).subscribe({
       next: (response) => {
         this.gymSlots = response;
         console.log(this.gymSlots);
