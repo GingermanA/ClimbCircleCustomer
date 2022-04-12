@@ -7,7 +7,7 @@ export class Gymslot {
   startTime: Date | undefined;
   endTime: Date | undefined;
   date: Date | undefined;
-  gym: Gym | undefined;
+  gymEntity: Gym | undefined;
   customers: Customer[] | undefined;
 
   constructor(

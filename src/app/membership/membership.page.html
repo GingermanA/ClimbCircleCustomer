@@ -1,9 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>membership</ion-title>
+    <ion-title>Membership</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label> My Bookings </ion-label>
+  </ion-item>
 
+  <ion-list>
+    <ion-card *ngFor="let gymSlot of gymSlots">
+      <ion-card-title
+        >{{gymSlot?.gymEntity.gymName}}
+        {{gymSlot.date.substring(0,10)}}</ion-card-title
+      >
+      <ion-card-subtitle>
+        {{gymSlot.startTime}} to {{gymSlot.endTime}}
+      </ion-card-subtitle>
+    </ion-card>
+  </ion-list>
 </ion-content>

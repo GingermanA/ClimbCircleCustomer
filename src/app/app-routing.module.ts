@@ -21,7 +21,10 @@ const routes: Routes = [
   },
   {
     path: 'createNewCustomer',
-    loadChildren: () => import('./create-new-customer/create-new-customer.module').then( m => m.CreateNewCustomerPageModule),
+    loadChildren: () =>
+      import('./create-new-customer/create-new-customer.module').then(
+        (m) => m.CreateNewCustomerPageModule
+      ),
   },
   {
     path: 'gyms',
@@ -32,6 +35,20 @@ const routes: Routes = [
     path: 'gyms/:id',
     loadChildren: () =>
       import('./gyms/gyms.module').then((m) => m.GymsPageModule),
+  },
+  {
+    path: 'createNewBooking',
+    loadChildren: () =>
+      import('./create-new-booking/create-new-booking.module').then(
+        (m) => m.CreateNewBookingPageModule
+      ),
+  },
+  {
+    path: 'createNewBooking/:id',
+    loadChildren: () =>
+      import('./create-new-booking/create-new-booking.module').then(
+        (m) => m.CreateNewBookingPageModule
+      ),
   },
 ];
 @NgModule({

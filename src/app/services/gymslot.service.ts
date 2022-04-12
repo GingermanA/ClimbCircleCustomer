@@ -8,8 +8,9 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Gym } from '../models/gym';
+import { SessionService } from './session.service';
 import { Gymslot } from '../models/gymslot';
+import { CreateBookingRequest } from '../models/create-booking-request';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,26 +19,36 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class GymService {
-  baseUrl: string = '/api/Gym';
+export class GymslotService {
+  baseUrl: string = '/api/GymSlot';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {}
 
-  getAllGyms(): Observable<Gym[]> {
+  getGymSlot(gymSlotId: number): Observable<Gymslot> {
     return this.httpClient
-      .get<Gym[]>(this.baseUrl + '/retrieveAllGyms')
+      .get<Gymslot>(this.baseUrl + '/retrieveGymSlot/' + gymSlotId)
       .pipe(catchError(this.handleError));
   }
 
-  getGymDetails(gymId: number): Observable<Gym> {
+  getGymSlotsForCustomer(): Observable<Gymslot[]> {
     return this.httpClient
-      .get<Gym>(this.baseUrl + '/retrieveGym/' + gymId)
+      .get<Gymslot[]>(
+        this.baseUrl + '/retrieveGymSlots/' + this.sessionService.getUsername()
+      )
       .pipe(catchError(this.handleError));
   }
 
-  getGymSlots(gymId: number, date: string): Observable<Gymslot[]> {
+  createBooking(gymSlotId: number): Observable<any> {
+    let createBookingRequest: CreateBookingRequest = new CreateBookingRequest(
+      gymSlotId,
+      this.sessionService.getUsername()
+    );
+
     return this.httpClient
-      .get<Gymslot[]>(this.baseUrl + '/retrieveGymSlots/' + gymId + '/' + date)
+      .post<any>(this.baseUrl, createBookingRequest, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
