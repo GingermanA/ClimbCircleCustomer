@@ -8,13 +8,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content>
   <ion-slides class="gym-slider" slidesPerView="2">
     <ion-slide *ngFor="let gym of gyms">
       <ion-card routerLink="/gyms/{{gym.gymId}}">
-        <!-- <img src="assets/img/{{img}}" class="gym-img" /> -->
+        <img src="assets/img/{{img}}" class="gym-img" />
         <ion-card-title>{{gym.gymName}}</ion-card-title>
       </ion-card>
     </ion-slide>
   </ion-slides>
+</ion-content> -->
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let gym of gyms" routerLink="/gyms/{{gym.gymId}}">
+      <ion-card-title>{{gym.gymName}}</ion-card-title>
+    </ion-card>
+  </ion-list>
 </ion-content>

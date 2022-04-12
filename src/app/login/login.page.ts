@@ -25,6 +25,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         let customer: Customer = response;
+        this.sessionService.setUsername(this.username);
         this.sessionService.setCurrentCustomer(customer);
         this.sessionService.setIsLogin(true);
         this.router.navigate(['/tabs']);

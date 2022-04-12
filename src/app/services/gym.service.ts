@@ -9,6 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Gym } from '../models/gym';
+import { Gymslot } from '../models/gymslot';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

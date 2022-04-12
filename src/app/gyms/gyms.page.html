@@ -7,7 +7,7 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Address: {{gym?.address}}</ion-label>
+      <ion-label class="ion-text-wrap">Address: {{gym?.address}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Operating Hours: {{gym?.operatingHours}}</ion-label>
@@ -27,6 +27,36 @@
   </ion-segment>
 
   <div [ngSwitch]="type">
-    <ion-datetime presentation="date" *ngSwitchCase="'slots'"> </ion-datetime>
+    <div id="slots" *ngSwitchCase="'slots'">
+      <ion-datetime
+        presentation="date"
+        (ionChange)="dateChanged($event)"
+      ></ion-datetime>
+
+      <ion-list>
+        <ion-card
+          *ngFor="let gymSlot of gymSlots"
+          (click)="onClick(gymSlot.gymSlotId)"
+          [class.active]="selectedSlot == gymSlot.gymSlotId"
+        >
+          <ion-card-title
+            >{{gymSlot.startTime}} to {{gymSlot.endTime}}</ion-card-title
+          >
+          <ion-card-subtitle>
+            Vacancies: {{gymSlot.vacancies}}
+          </ion-card-subtitle>
+        </ion-card>
+      </ion-list>
+
+      <ion-button
+        *ngIf="selectedSlot > 0"
+        routerLink="/createNewBooking/{{selectedSlot}}"
+        >Book Slot</ion-button
+      >
+
+      <ion-item *ngIf="gymSlots?.length == 0">No Slots Available :(</ion-item>
+    </div>
+
+    <div id="routes" *ngSwitchCase="'routes'">Routes</div>
   </div>
 </ion-content>
