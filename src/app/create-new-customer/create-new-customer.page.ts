@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../models/customer';
+import { SubscriptionPlan } from '../models/subscription-plan';
 import { CustomerService } from '../services/customer.service';
+import { SubscriptionPlanService } from '../services/subscription-plan.service';
 
 
 @Component({
@@ -11,9 +13,23 @@ import { CustomerService } from '../services/customer.service';
 export class CreateNewCustomerPage implements OnInit {
   customer: Customer;
   message: string | undefined;
+  subscriptionPlans: SubscriptionPlan[];
+  subscriptionPlanService: any;
 
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, subscriptionPlanService: SubscriptionPlanService) {
     this.customer = new Customer();
+  }
+
+  ngOnInit()
+  {
+    this.subscriptionPlanService.getSubscriptionPlans().subscribe({
+      next:(response)=>{
+        this.subscriptionPlans = response;
+      },
+      error:(error)=>{
+        console.log('********** CreateNewProductPage: ' + error);
+      }
+    });				
   }
 
   createCustomer() {
@@ -30,7 +46,6 @@ export class CreateNewCustomerPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+
 
 }
