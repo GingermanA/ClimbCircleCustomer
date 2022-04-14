@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
-  images = ['1.jpg', '2.jpg', '3.jpg'];
+  //images = ['1.jpg', '2.jpg', '3.jpg'];
   gyms: Gym[];
+  gymImageUrl: string =
+    'http://localhost:8080/GP14-war/uploadedFiles/gym_profile_pictures/';
 
   constructor(
     private sessionService: SessionService,

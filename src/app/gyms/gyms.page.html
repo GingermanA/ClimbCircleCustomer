@@ -7,6 +7,9 @@
 <ion-content>
   <ion-list>
     <ion-item>
+      <img src="{{gymImageUrl}}" />
+    </ion-item>
+    <ion-item>
       <ion-label class="ion-text-wrap">Address: {{gym?.address}}</ion-label>
     </ion-item>
     <ion-item>
@@ -34,6 +37,9 @@
       ></ion-datetime>
 
       <ion-list>
+        <ion-list-header color="primary">
+          <ion-label>Slots</ion-label>
+        </ion-list-header>
         <ion-card
           *ngFor="let gymSlot of gymSlots"
           (click)="onClick(gymSlot.gymSlotId)"
@@ -46,17 +52,31 @@
             Vacancies: {{gymSlot.vacancies}}
           </ion-card-subtitle>
         </ion-card>
+        <ion-item *ngIf="gymSlots?.length == 0">No Slots Available :(</ion-item>
       </ion-list>
 
-      <ion-button
-        *ngIf="selectedSlot > 0"
-        routerLink="/createNewBooking/{{selectedSlot}}"
+      <ion-button *ngIf="selectedSlot > 0" (click)="bookSlot()"
         >Book Slot</ion-button
       >
-
-      <ion-item *ngIf="gymSlots?.length == 0">No Slots Available :(</ion-item>
     </div>
 
-    <div id="routes" *ngSwitchCase="'routes'">Routes</div>
+    <div id="routes" *ngSwitchCase="'routes'">
+      <ion-list class="ion-padding">
+        <ion-item *ngFor="let route of routes">
+          <ion-label>{{route.routeName}}</ion-label>
+          <ion-label>{{route.routeRating}}</ion-label>
+        </ion-item>
+        <!-- <ion-list-header color="primary">
+          <ion-label>Items Header</ion-label>
+        </ion-list-header>
+        <ion-item> Item type A 1 </ion-item>
+        <ion-item> Item type A 2 </ion-item>
+        <ion-item-divider color="danger">
+          <ion-label> Item Divider B </ion-label>
+        </ion-item-divider>
+        <ion-item> Item B 1 </ion-item>
+        <ion-item> Item B 2 </ion-item> -->
+      </ion-list>
+    </div>
   </div>
 </ion-content>

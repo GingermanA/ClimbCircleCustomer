@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { GymService } from '../services/gym.service';
 import { GymslotService } from '../services/gymslot.service';
+import { RouteService } from '../services/route.service';
 import { Gym } from '../models/gym';
 import { Gymslot } from '../models/gymslot';
+import { Route } from '../models/route';
+import { RouteRatingEnum } from '../models/route-rating-enum';
 
 import { format } from 'date-fns';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-gyms',
@@ -20,13 +24,22 @@ export class GymsPage implements OnInit {
   gymId: number;
   gym: Gym;
   gymSlots: Gymslot[];
+  gymImageUrl: string =
+    'http://localhost:8080/GP14-war/uploadedFiles/gym_profile_pictures/';
+  routes: Route[];
+  easyRoutes: Route[];
+  mediumRoutes: Route[];
+  hardRoutes: Route[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private gymService: GymService,
-    private gymSlotService: GymslotService
+    private gymSlotService: GymslotService,
+    private routeService: RouteService,
+    private alertController: AlertController
   ) {
-    this.type = 'slots';
+    this.type = 'routes';
   }
 
   ngOnInit() {
@@ -34,7 +47,10 @@ export class GymsPage implements OnInit {
 
     this.gymService.getGymDetails(this.gymId).subscribe({
       next: (response) => {
+        console.log(response);
         this.gym = response;
+        this.gymImageUrl = this.gymImageUrl + this.gym.profilePictureURL;
+        console.log(this.gymImageUrl);
       },
       error: (error) => {
         console.log(error);
@@ -45,6 +61,32 @@ export class GymsPage implements OnInit {
       next: (response) => {
         this.gymSlots = response;
         console.log(this.gymSlots);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+
+    this.routeService.getRoutesForGym(this.gymId).subscribe({
+      next: (response) => {
+        this.routes = response;
+
+        //sort routes in ascending difficulty
+        this.routes.sort((a, b) => {
+          const order = [];
+          for (let key in RouteRatingEnum) {
+            order.push(key);
+          }
+          const index1 = order.findIndex(
+            (key) => RouteRatingEnum[key] === a.routeRating.toString()
+          );
+          const index2 = order.findIndex(
+            (key) => RouteRatingEnum[key] === b.routeRating.toString()
+          );
+          return index1 - index2;
+        });
+
+        console.log(this.routes);
       },
       error: (error) => {
         console.log(error);
@@ -70,5 +112,34 @@ export class GymsPage implements OnInit {
   onClick(gymSlotId: number) {
     console.log(gymSlotId);
     this.selectedSlot = gymSlotId;
+  }
+
+  bookSlot() {
+    this.gymSlotService.getGymSlotsForCustomer().subscribe({
+      next: (response) => {
+        let customerGymSlots: Gymslot[] = response;
+        let canRedirect: Boolean = true;
+        for (let i = 0; i < customerGymSlots.length; i++) {
+          if (customerGymSlots[i].gymSlotId == this.selectedSlot) {
+            canRedirect = false;
+            this.alertController
+              .create({
+                header: 'Alert',
+                message: 'You have already booked this gym slot',
+                buttons: ['OK'],
+              })
+              .then((res) => {
+                res.present();
+              });
+
+            break;
+          }
+        }
+
+        if (canRedirect) {
+          this.router.navigate(['createNewBooking', this.selectedSlot]);
+        }
+      },
+    });
   }
 }

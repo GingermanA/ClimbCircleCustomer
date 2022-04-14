@@ -20,8 +20,10 @@
 </ion-content> -->
 
 <ion-content>
+  <ion-searchbar></ion-searchbar>
   <ion-list>
     <ion-card *ngFor="let gym of gyms" routerLink="/gyms/{{gym.gymId}}">
+      <img src="{{gymImageUrl + gym.profilePictureURL}}" />
       <ion-card-title>{{gym.gymName}}</ion-card-title>
     </ion-card>
   </ion-list>

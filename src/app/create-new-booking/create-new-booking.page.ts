@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { GymslotService } from '../services/gymslot.service';
 import { Gymslot } from '../models/gymslot';
@@ -18,7 +18,8 @@ export class CreateNewBookingPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private gymSlotService: GymslotService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -38,11 +39,15 @@ export class CreateNewBookingPage implements OnInit {
     this.gymSlotService.createBooking(this.gymSlotId).subscribe({
       next: (response) => {
         //console.log(response);
-        //this.location.back();
+        this.router.navigate(['/tabs/membership']);
       },
       error: (error) => {
         console.log(error);
       },
     });
+  }
+
+  cancel() {
+    this.location.back();
   }
 }
