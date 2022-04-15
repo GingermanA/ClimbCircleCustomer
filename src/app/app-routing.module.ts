@@ -50,6 +50,16 @@ const routes: Routes = [
         (m) => m.CreateNewBookingPageModule
       ),
   },
+  {
+    path: 'routes',
+    loadChildren: () =>
+      import('./routes/routes.module').then((m) => m.RoutesPageModule),
+  },
+  {
+    path: 'routes/:id',
+    loadChildren: () =>
+      import('./routes/routes.module').then((m) => m.RoutesPageModule),
+  },
 ];
 @NgModule({
   imports: [

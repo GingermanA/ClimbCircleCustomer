@@ -8,7 +8,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Route } from '../models/route';
+import { RouteReview } from '../models/route-review';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,20 +17,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class RouteService {
-  baseUrl: string = '/api/Route';
+export class RouteReviewService {
+  baseUrl: string = '/api/RouteReview';
 
   constructor(private httpClient: HttpClient) {}
 
-  getRoutesForGym(gymId: number): Observable<Route[]> {
+  getRouteReviewsForRoute(routeId: number): Observable<RouteReview[]> {
     return this.httpClient
-      .get<Route[]>(this.baseUrl + '/retrieveRoutes/' + gymId)
-      .pipe(catchError(this.handleError));
-  }
-
-  getRouteById(routeId: number): Observable<Route> {
-    return this.httpClient
-      .get<Route>(this.baseUrl + '/retrieveRoute/' + routeId)
+      .get<RouteReview[]>(this.baseUrl + '/retrieveRouteReviews/' + routeId)
       .pipe(catchError(this.handleError));
   }
 

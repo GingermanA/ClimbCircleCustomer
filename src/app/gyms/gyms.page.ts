@@ -27,9 +27,8 @@ export class GymsPage implements OnInit {
   gymImageUrl: string =
     'http://localhost:8080/GP14-war/uploadedFiles/gym_profile_pictures/';
   routes: Route[];
-  easyRoutes: Route[];
-  mediumRoutes: Route[];
-  hardRoutes: Route[];
+  unsortedRoutes: Route[];
+  sort: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,21 +69,22 @@ export class GymsPage implements OnInit {
     this.routeService.getRoutesForGym(this.gymId).subscribe({
       next: (response) => {
         this.routes = response;
+        this.unsortedRoutes = this.routes.slice();
 
         //sort routes in ascending difficulty
-        this.routes.sort((a, b) => {
-          const order = [];
-          for (let key in RouteRatingEnum) {
-            order.push(key);
-          }
-          const index1 = order.findIndex(
-            (key) => RouteRatingEnum[key] === a.routeRating.toString()
-          );
-          const index2 = order.findIndex(
-            (key) => RouteRatingEnum[key] === b.routeRating.toString()
-          );
-          return index1 - index2;
-        });
+        // this.routes.sort((a, b) => {
+        //   const order = [];
+        //   for (let key in RouteRatingEnum) {
+        //     order.push(key);
+        //   }
+        //   const index1 = order.findIndex(
+        //     (key) => RouteRatingEnum[key] === a.routeRating.toString()
+        //   );
+        //   const index2 = order.findIndex(
+        //     (key) => RouteRatingEnum[key] === b.routeRating.toString()
+        //   );
+        //   return index1 - index2;
+        // });
 
         console.log(this.routes);
       },
@@ -141,5 +141,33 @@ export class GymsPage implements OnInit {
         }
       },
     });
+  }
+
+  sortRoutes() {
+    const routeComparator = (a, b) => {
+      const order = [];
+      for (let key in RouteRatingEnum) {
+        order.push(key);
+      }
+      const index1 = order.findIndex(
+        (key) => RouteRatingEnum[key] === a.routeRating.toString()
+      );
+      const index2 = order.findIndex(
+        (key) => RouteRatingEnum[key] === b.routeRating.toString()
+      );
+      return index1 - index2;
+    };
+
+    if (this.sort == 1) {
+      this.routes.sort(routeComparator);
+    } else if (this.sort == 2) {
+      this.routes.sort(routeComparator).reverse();
+    } else {
+      this.routes = this.unsortedRoutes;
+    }
+  }
+
+  redirect(routeId: number) {
+    this.router.navigate(['routes', routeId]);
   }
 }
