@@ -13,6 +13,13 @@ const routes: Routes = [
           import('../explore/explore.module').then((m) => m.ExplorePageModule),
       },
       {
+        path: 'bookings',
+        loadChildren: () =>
+          import('../bookings/bookings.module').then(
+            (m) => m.BookingsPageModule
+          ),
+      },
+      {
         path: 'membership',
         loadChildren: () =>
           import('../membership/membership.module').then(

@@ -61,22 +61,20 @@
     </div>
 
     <div id="routes" *ngSwitchCase="'routes'">
-      <ion-list class="ion-padding">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let route of routes">
+            {{route.routeName}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- <ion-list class="ion-padding">
         <ion-item *ngFor="let route of routes">
           <ion-label>{{route.routeName}}</ion-label>
           <ion-label>{{route.routeRating}}</ion-label>
         </ion-item>
-        <!-- <ion-list-header color="primary">
-          <ion-label>Items Header</ion-label>
-        </ion-list-header>
-        <ion-item> Item type A 1 </ion-item>
-        <ion-item> Item type A 2 </ion-item>
-        <ion-item-divider color="danger">
-          <ion-label> Item Divider B </ion-label>
-        </ion-item-divider>
-        <ion-item> Item B 1 </ion-item>
-        <ion-item> Item B 2 </ion-item> -->
-      </ion-list>
+      </ion-list> -->
     </div>
   </div>
 </ion-content>

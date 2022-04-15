@@ -4,21 +4,4 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-list-header> Upcoming Bookings </ion-list-header>
-    <ion-item *ngFor="let gymSlot of gymSlots">
-      <ion-thumbnail slot="start">
-        <img src="assets/img/1.jpg" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{gymSlot.gymEntity.gymName}}</h2>
-
-        <p>
-          {{gymSlot.date.substring(0,10)}} : {{gymSlot.startTime}} to
-          {{gymSlot.endTime}}
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>
+<ion-content> </ion-content>

@@ -39,7 +39,7 @@ export class CreateNewBookingPage implements OnInit {
     this.gymSlotService.createBooking(this.gymSlotId).subscribe({
       next: (response) => {
         //console.log(response);
-        this.router.navigate(['/tabs/membership']);
+        this.router.navigate(['/tabs/bookings']);
       },
       error: (error) => {
         console.log(error);
