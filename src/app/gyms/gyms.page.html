@@ -1,5 +1,9 @@
 <ion-header>
+
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{gym?.gymName}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -31,23 +35,15 @@
 
   <div [ngSwitch]="type">
     <div id="slots" *ngSwitchCase="'slots'">
-      <ion-datetime
-        presentation="date"
-        (ionChange)="dateChanged($event)"
-      ></ion-datetime>
+      <ion-datetime presentation="date" (ionChange)="dateChanged($event)"></ion-datetime>
 
       <ion-list>
         <ion-list-header color="primary">
           <ion-label>Slots</ion-label>
         </ion-list-header>
-        <ion-card
-          *ngFor="let gymSlot of gymSlots"
-          (click)="onClick(gymSlot.gymSlotId)"
-          [class.active]="selectedSlot == gymSlot.gymSlotId"
-        >
-          <ion-card-title
-            >{{gymSlot.startTime}} to {{gymSlot.endTime}}</ion-card-title
-          >
+        <ion-card *ngFor="let gymSlot of gymSlots" (click)="onClick(gymSlot.gymSlotId)"
+          [class.active]="selectedSlot == gymSlot.gymSlotId">
+          <ion-card-title>{{gymSlot.startTime}} to {{gymSlot.endTime}}</ion-card-title>
           <ion-card-subtitle>
             Vacancies: {{gymSlot.vacancies}}
           </ion-card-subtitle>
@@ -55,9 +51,7 @@
         <ion-item *ngIf="gymSlots?.length == 0">No Slots Available :(</ion-item>
       </ion-list>
 
-      <ion-button *ngIf="selectedSlot > 0" (click)="bookSlot()"
-        >Book Slot</ion-button
-      >
+      <ion-button *ngIf="selectedSlot > 0" (click)="bookSlot()">Book Slot</ion-button>
     </div>
 
     <div id="routes" *ngSwitchCase="'routes'">

@@ -42,10 +42,7 @@ export class CreateNewCustomerPage implements OnInit {
         next: (response) => {
           let newCustomerId: number = response;
           console.log(newCustomerId);
-
-          //Redirect to payment page
-          //this.router.navigate[''];
-
+          
           this.message =
             'New customer ' + newCustomerId + ' created successfully';
         },
@@ -58,3 +55,6 @@ export class CreateNewCustomerPage implements OnInit {
       });
   }
 }
+
+  
+
