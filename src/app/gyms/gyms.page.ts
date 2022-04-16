@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GymService } from '../services/gym.service';
 import { GymslotService } from '../services/gymslot.service';
 import { RouteService } from '../services/route.service';
+import { SessionService } from '../services/session.service';
 import { Gym } from '../models/gym';
 import { Gymslot } from '../models/gymslot';
 import { Route } from '../models/route';
@@ -12,6 +13,7 @@ import { EnumsService } from '../services/enums.service';
 
 import { format } from 'date-fns';
 import { AlertController } from '@ionic/angular';
+import { Customer } from '../models/customer';
 
 @Component({
   selector: 'app-gyms',
@@ -40,6 +42,7 @@ export class GymsPage implements OnInit {
     private gymService: GymService,
     private gymSlotService: GymslotService,
     private routeService: RouteService,
+    private sessionService: SessionService,
     private alertController: AlertController
   ) {
     this.type = 'routes';
@@ -118,32 +121,52 @@ export class GymsPage implements OnInit {
   }
 
   bookSlot() {
-    this.gymSlotService.getGymSlotsForCustomer().subscribe({
-      next: (response) => {
-        let customerGymSlots: Gymslot[] = response;
-        let canRedirect: Boolean = true;
-        for (let i = 0; i < customerGymSlots.length; i++) {
-          if (customerGymSlots[i].gymSlotId == this.selectedSlot) {
-            canRedirect = false;
-            this.alertController
-              .create({
-                header: 'Alert',
-                message: 'You have already booked this gym slot',
-                buttons: ['OK'],
-              })
-              .then((res) => {
-                res.present();
-              });
+    let canRedirect: Boolean = true;
 
-            break;
+    let passes: number = this.sessionService.getPasses();
+    console.log(passes);
+    if (passes == 0) {
+      canRedirect = false;
+      this.alertController
+        .create({
+          header: 'Alert',
+          message: 'You have 0 passes left. Please renew your Membership!',
+          buttons: ['OK'],
+        })
+        .then((res) => {
+          res.present();
+        });
+    } else {
+      this.gymSlotService.getGymSlotsForCustomer().subscribe({
+        next: (response) => {
+          let customerGymSlots: Gymslot[] = response;
+
+          for (let i = 0; i < customerGymSlots.length; i++) {
+            if (customerGymSlots[i].gymSlotId == this.selectedSlot) {
+              canRedirect = false;
+              this.alertController
+                .create({
+                  header: 'Alert',
+                  message: 'You have already booked this gym slot',
+                  buttons: ['OK'],
+                })
+                .then((res) => {
+                  res.present();
+                });
+
+              break;
+            }
           }
-        }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
 
-        if (canRedirect) {
-          this.router.navigate(['createNewBooking', this.selectedSlot]);
-        }
-      },
-    });
+    if (canRedirect) {
+      this.router.navigate(['createNewBooking', this.selectedSlot]);
+    }
   }
 
   sortRoutes() {

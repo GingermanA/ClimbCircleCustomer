@@ -1,5 +1,47 @@
+.route {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell {
+  border-color: black;
+  border-width: 0.01em;
+  border-style: solid;
+  margin-bottom: -1px;
+  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.rating-easy {
+  margin: 4px;
+  padding: 8px;
+  background-color: rgb(255, 200, 0);
+  border-radius: 5px;
+}
+
+.rating-med {
+  margin: 4px;
+  padding: 8px;
+  background-color: rgb(255, 98, 0);
+  border-radius: 5px;
+}
+
+.rating-hard {
+  margin: 4px;
+  padding: 8px;
+  background-color: red;
+  border-radius: 5px;
+}
+
+#gymRating {
+  border-right-style: dotted;
 }

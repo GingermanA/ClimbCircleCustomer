@@ -6,6 +6,7 @@ import { Route } from '../models/route';
 import { RouteReviewService } from '../services/route-review.service';
 import { RouteReview } from '../models/route-review';
 import { RouteRatingEnum } from '../models/route-rating-enum';
+import { EnumsService } from '../services/enums.service';
 
 @Component({
   selector: 'app-routes',
@@ -18,8 +19,11 @@ export class RoutesPage implements OnInit {
   routeReviews: RouteReview[];
   routeRatingKeys: string[] = Object.keys(RouteRatingEnum);
   routeRatings: any[];
+  userRating: RouteRatingEnum;
+  numOfRatings: number = 0;
 
   constructor(
+    public enums: EnumsService,
     private activatedRoute: ActivatedRoute,
     private routeService: RouteService,
     private routeReviewService: RouteReviewService,
@@ -52,15 +56,17 @@ export class RoutesPage implements OnInit {
         this.routeRatings = response;
 
         //aggregating results
-        let sum: number = 0;
+        let highestCount: number = 0;
         for (let i = 0; i < this.routeRatings.length; i++) {
           let rating: RouteRatingEnum = this.routeRatings[i][0];
           let count: number = this.routeRatings[i][1];
 
-          sum = sum + RouteRatingEnum[rating.toString()] * count;
-        }
+          this.numOfRatings += count;
 
-        console.log(sum);
+          if (count > highestCount) {
+            this.userRating = rating;
+          }
+        }
       },
       error: (error) => {
         console.log(error);
