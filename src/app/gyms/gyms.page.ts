@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { GymService } from '../services/gym.service';
@@ -8,6 +8,7 @@ import { Gym } from '../models/gym';
 import { Gymslot } from '../models/gymslot';
 import { Route } from '../models/route';
 import { RouteRatingEnum } from '../models/route-rating-enum';
+import { EnumsService } from '../services/enums.service';
 
 import { format } from 'date-fns';
 import { AlertController } from '@ionic/angular';
@@ -20,7 +21,9 @@ import { AlertController } from '@ionic/angular';
 export class GymsPage implements OnInit {
   type: string;
   selectedSlot: number = 0;
+  minDate: string = format(new Date(), 'yyyy-MM-dd');
   currDate: string = format(new Date(), 'yyyy-MM-dd');
+  currTime: string = new Date().toLocaleTimeString();
   gymId: number;
   gym: Gym;
   gymSlots: Gymslot[];
@@ -31,6 +34,7 @@ export class GymsPage implements OnInit {
   sort: number = 0;
 
   constructor(
+    public enums: EnumsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private gymService: GymService,
@@ -59,7 +63,6 @@ export class GymsPage implements OnInit {
     this.gymSlotService.getGymSlotsForGym(this.gymId, this.currDate).subscribe({
       next: (response) => {
         this.gymSlots = response;
-        console.log(this.gymSlots);
       },
       error: (error) => {
         console.log(error);

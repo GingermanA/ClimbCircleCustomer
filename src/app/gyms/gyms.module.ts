@@ -8,16 +8,8 @@ import { GymsPageRoutingModule } from './gyms-routing.module';
 
 import { GymsPage } from './gyms.page';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    GymsPageRoutingModule,
-    NgxDatatableModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, GymsPageRoutingModule],
   declarations: [GymsPage],
 })
 export class GymsPageModule {}

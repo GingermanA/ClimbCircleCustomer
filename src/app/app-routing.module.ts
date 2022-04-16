@@ -60,6 +60,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./routes/routes.module').then((m) => m.RoutesPageModule),
   },
+  {
+    path: 'createRouteReview',
+    loadChildren: () =>
+      import('./create-route-review/create-route-review.module').then(
+        (m) => m.CreateRouteReviewPageModule
+      ),
+  },
+  {
+    path: 'createRouteReview/:id',
+    loadChildren: () =>
+      import('./create-route-review/create-route-review.module').then(
+        (m) => m.CreateRouteReviewPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

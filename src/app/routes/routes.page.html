@@ -7,12 +7,43 @@
 <ion-content>
   <ion-item> {{route?.description}} </ion-item>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10">
+        <ion-list>
+          <ion-list-header color="primary">
+            <ion-label>User Rating Summary</ion-label>
+          </ion-list-header>
+
+          <ion-item *ngFor="let key of routeRatings">
+            <ion-range
+              style="pointer-events: none"
+              min="0"
+              max="3"
+              step="1"
+              [value]="key[1]"
+            >
+              <ion-label slot="start">{{key[0]}}</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col> Aggregated Ratings </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-list>
     <ion-list-header color="primary">
       <ion-label>Route Reviews</ion-label>
     </ion-list-header>
+    <div class="center">
+      <ion-button (click)="addReview()">Add a Review</ion-button>
+    </div>
     <ion-card *ngFor="let routeReview of routeReviews">
-      <ion-card-content> {{routeReview.content}} </ion-card-content>
+      <ion-card-content>
+        <h2>Rating: {{routeReview.rating}}</h2>
+        <p>{{routeReview.content}}</p>
+      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>

@@ -35,16 +35,18 @@
   <div [ngSwitch]="type">
     <div id="slots" *ngSwitchCase="'slots'">
       <ion-datetime
+        size="cover"
+        [min]="minDate"
         presentation="date"
         (ionChange)="dateChanged($event)"
       ></ion-datetime>
 
-      <ion-list>
-        <ion-list-header color="primary">
+      <ion-list *ngFor="let gymSlot of gymSlots">
+        <!-- <ion-list-header color="primary">
           <ion-label>Slots</ion-label>
-        </ion-list-header>
+        </ion-list-header> -->
         <ion-card
-          *ngFor="let gymSlot of gymSlots"
+          *ngIf="gymSlot.vacancies > 0 && (gymSlot.date > minDate || gymSlot.startTime > currTime)"
           (click)="onClick(gymSlot.gymSlotId)"
           [class.active]="selectedSlot == gymSlot.gymSlotId"
         >
@@ -55,12 +57,10 @@
             Vacancies: {{gymSlot.vacancies}}
           </ion-card-subtitle>
         </ion-card>
-        <ion-item *ngIf="gymSlots?.length == 0">No Slots Available :(</ion-item>
+        <!-- <ion-item *ngIf="gymSlots?.length == 0" lines="none"
+          >No Slots Available :(</ion-item
+        > -->
       </ion-list>
-
-      <ion-button *ngIf="selectedSlot > 0" (click)="bookSlot()"
-        >Book Slot</ion-button
-      >
     </div>
 
     <div id="routes" *ngSwitchCase="'routes'">
@@ -72,6 +72,7 @@
           <ion-select-option value="2">Descending</ion-select-option>
         </ion-select>
       </ion-item>
+
       <ion-grid>
         <ion-row>
           <ion-col size="6" *ngFor="let route of routes">
@@ -100,18 +101,44 @@
           <ion-col>{{ route.location }}</ion-col>
           <ion-col>{{ route.routeRating }}</ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
 
-      <ion-list class="ion-padding">
+      <!-- <ion-list>
         <ion-item
           *ngFor="let route of routes"
           (click)="redirect(route.routeId)"
-          detail="true"
         >
           <ion-label>{{route.routeName}}</ion-label>
-          <ion-label>{{route.routeRating}}</ion-label>
+          <ion-label
+            *ngIf="route.routeRating == enums.RouteRatingEnum.VB || route.routeRating == enums.RouteRatingEnum.V0to1 || route.routeRating == enums.RouteRatingEnum.V1to2"
+            class="rating-easy"
+            slot="end"
+            >{{route.routeRating}}</ion-label
+          >
+
+          <ion-label
+            *ngIf="route.routeRating == enums.RouteRatingEnum.V2to4 || route.routeRating == enums.RouteRatingEnum.V4to6"
+            class="rating-med"
+            slot="end"
+            >{{route.routeRating}}</ion-label
+          >
+
+          <ion-label
+            *ngIf="route.routeRating == enums.RouteRatingEnum.V6to8 || route.routeRating == enums.RouteRatingEnum.aboveV8"
+            class="rating-hard"
+            slot="end"
+            >{{route.routeRating}}</ion-label
+          >
         </ion-item>
       </ion-list> -->
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" *ngIf="selectedSlot > 0" (click)="bookSlot()"
+      >Book Slot</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>
