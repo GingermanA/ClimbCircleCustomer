@@ -3,6 +3,7 @@ import { Customer } from '../models/customer';
 import { AuthService } from '../services/auth.service';
 import { SessionService } from '../services/session.service';
 import { Router } from '@angular/router';
+import { isThisISOWeek } from 'date-fns';
 
 @Component({
   selector: 'app-login',
@@ -26,9 +27,11 @@ export class LoginPage implements OnInit {
       next: (response) => {
         let customer: Customer = response;
         this.sessionService.setUsername(this.username);
+        this.sessionService.setPassword(this.password);
         this.sessionService.setCurrentCustomer(customer);
         this.sessionService.setIsLogin(true);
         this.sessionService.setPasses(customer.numOfPassesLeft);
+        this.sessionService.setSubscription(customer.subscriptionPlan);
         this.router.navigate(['/tabs']);
       },
       error: (error) => {

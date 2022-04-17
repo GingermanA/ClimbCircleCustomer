@@ -8,8 +8,14 @@ import { GymsPageRoutingModule } from './gyms-routing.module';
 
 import { GymsPage } from './gyms.page';
 
+
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, GymsPageRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    GymsPageRoutingModule,
+  ],
   declarations: [GymsPage],
 })
 export class GymsPageModule {}

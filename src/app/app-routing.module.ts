@@ -51,10 +51,13 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'routes',
+    path: 'updateMembership',
     loadChildren: () =>
-      import('./routes/routes.module').then((m) => m.RoutesPageModule),
+      import('./membership/update-membership/update-membership.module').then(
+        (m) => m.UpdateMembershipPageModule
+      ),
   },
+
   {
     path: 'routes/:id',
     loadChildren: () =>
@@ -95,4 +98,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

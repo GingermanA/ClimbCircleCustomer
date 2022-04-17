@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Customer } from '../models/customer';
+import { SubscriptionPlan } from '../models/subscription-plan';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,13 @@ export class SessionService {
 
   setPasses(passes: number | undefined): void {
     sessionStorage['passes'] = passes;
+  }
+
+  getSubscription(): SubscriptionPlan {
+    return sessionStorage['subscription'];
+  }
+
+  setSubscription(subscription: SubscriptionPlan | undefined): void {
+    sessionStorage['subscription'] = subscription;
   }
 }
