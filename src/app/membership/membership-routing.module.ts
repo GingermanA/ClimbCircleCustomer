@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: MembershipPage
+  },
+  {
+    path: 'update-membership',
+    loadChildren: () => import('./update-membership/update-membership.module').then( m => m.UpdateMembershipPageModule)
   }
 ];
 

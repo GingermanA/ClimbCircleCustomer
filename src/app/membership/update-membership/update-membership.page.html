@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>UpdateMembership</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-item color="dark">
+    <ion-label>Select New Subscription Plan To Change To</ion-label>
+    <ion-select
+      placeholder="Select One Subscription Plan"
+      id="subscriptionPlan"
+      name="subscriptionPlan"
+      #category="ngModel"
+      [(ngModel)]="subscriptionPlan"
+      required="true"
+    >
+      <ion-select-option
+        *ngFor="let subscriptionPlan of subscriptionPlans"
+        value="{{subscriptionPlan.name}}"
+        >{{subscriptionPlan.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

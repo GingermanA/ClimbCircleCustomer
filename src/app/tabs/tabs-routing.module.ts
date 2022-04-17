@@ -36,6 +36,7 @@ const routes: Routes = [
         redirectTo: '/tabs/explore',
         pathMatch: 'full',
       },
+      
     ],
   },
 ];

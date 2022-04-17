@@ -9,6 +9,10 @@ import { catchError } from 'rxjs/operators';
 
 import { Customer } from '../models/customer';
 import { CreateCustomerRequest } from '../models/create-customer-request';
+import { SubscriptionPlan } from '../models/subscription-plan';
+import { UpdateCustomerRequest } from '../models/update-customer-request';
+import { SessionService } from './session.service';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -19,7 +23,7 @@ const httpOptions = {
 export class CustomerService {
   baseUrl: string = '/api/Customer';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private sessionService: SessionService, private customerService: CustomerService) {}
 
   getCustomers(): Observable<Customer[]> {
     return this.httpClient
@@ -36,6 +40,26 @@ export class CustomerService {
     return this.httpClient
       .put<number>(this.baseUrl, createCustomerRequest, httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  updateCustomer(customerToUpdate: Customer): Observable<any>
+  {
+    let updateCustomerReq: UpdateCustomerRequest = new UpdateCustomerRequest(this.sessionService.getCurrentCustomer(), new SubscriptionPlan(1, "Premium", 10) );
+    
+    return this.httpClient.post<any>(this.baseUrl, updateCustomerReq, httpOptions).pipe
+    (
+      catchError(this.handleError)
+    );
+  }
+
+  renewMembership(customerToUpdate: Customer): Observable<any>
+  {
+    let updateCustomerReq: UpdateCustomerRequest = new UpdateCustomerRequest(this.sessionService.getCurrentCustomer());
+    
+    return this.httpClient.post<any>(this.baseUrl, updateCustomerReq, httpOptions).pipe
+    (
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

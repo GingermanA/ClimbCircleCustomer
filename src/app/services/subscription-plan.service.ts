@@ -21,7 +21,6 @@ export class SubscriptionPlanService {
   constructor(private httpClient: HttpClient) {
   }
 
-
   getSubscriptionPlans(): Observable<SubscriptionPlan[]> {
     return this.httpClient.get<SubscriptionPlan[]>(this.baseUrl + "/retrieveAllSubscriptionPlans").pipe
       (
