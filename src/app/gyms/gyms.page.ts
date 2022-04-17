@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { GymService } from '../services/gym.service';
 import { GymslotService } from '../services/gymslot.service';
 import { RouteService } from '../services/route.service';
+import { SessionService } from '../services/session.service';
 import { Gym } from '../models/gym';
 import { Gymslot } from '../models/gymslot';
 import { Route } from '../models/route';
 import { RouteRatingEnum } from '../models/route-rating-enum';
+import { EnumsService } from '../services/enums.service';
 
 import { format } from 'date-fns';
 import { AlertController } from '@ionic/angular';
+import { Customer } from '../models/customer';
 
 @Component({
   selector: 'app-gyms',
@@ -20,7 +23,9 @@ import { AlertController } from '@ionic/angular';
 export class GymsPage implements OnInit {
   type: string;
   selectedSlot: number = 0;
+  minDate: string = format(new Date(), 'yyyy-MM-dd');
   currDate: string = format(new Date(), 'yyyy-MM-dd');
+  currTime: string = new Date().toLocaleTimeString();
   gymId: number;
   gym: Gym;
   gymSlots: Gymslot[];
@@ -31,11 +36,13 @@ export class GymsPage implements OnInit {
   sort: number = 0;
 
   constructor(
+    public enums: EnumsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private gymService: GymService,
     private gymSlotService: GymslotService,
     private routeService: RouteService,
+    private sessionService: SessionService,
     private alertController: AlertController
   ) {
     this.type = 'routes';
@@ -59,7 +66,6 @@ export class GymsPage implements OnInit {
     this.gymSlotService.getGymSlotsForGym(this.gymId, this.currDate).subscribe({
       next: (response) => {
         this.gymSlots = response;
-        console.log(this.gymSlots);
       },
       error: (error) => {
         console.log(error);
@@ -115,32 +121,52 @@ export class GymsPage implements OnInit {
   }
 
   bookSlot() {
-    this.gymSlotService.getGymSlotsForCustomer().subscribe({
-      next: (response) => {
-        let customerGymSlots: Gymslot[] = response;
-        let canRedirect: Boolean = true;
-        for (let i = 0; i < customerGymSlots.length; i++) {
-          if (customerGymSlots[i].gymSlotId == this.selectedSlot) {
-            canRedirect = false;
-            this.alertController
-              .create({
-                header: 'Alert',
-                message: 'You have already booked this gym slot',
-                buttons: ['OK'],
-              })
-              .then((res) => {
-                res.present();
-              });
+    let canRedirect: Boolean = true;
 
-            break;
+    let passes: number = this.sessionService.getPasses();
+    console.log(passes);
+    if (passes == 0) {
+      canRedirect = false;
+      this.alertController
+        .create({
+          header: 'Alert',
+          message: 'You have 0 passes left. Please renew your Membership!',
+          buttons: ['OK'],
+        })
+        .then((res) => {
+          res.present();
+        });
+    } else {
+      this.gymSlotService.getGymSlotsForCustomer().subscribe({
+        next: (response) => {
+          let customerGymSlots: Gymslot[] = response;
+
+          for (let i = 0; i < customerGymSlots.length; i++) {
+            if (customerGymSlots[i].gymSlotId == this.selectedSlot) {
+              canRedirect = false;
+              this.alertController
+                .create({
+                  header: 'Alert',
+                  message: 'You have already booked this gym slot',
+                  buttons: ['OK'],
+                })
+                .then((res) => {
+                  res.present();
+                });
+
+              break;
+            }
           }
-        }
 
-        if (canRedirect) {
-          this.router.navigate(['createNewBooking', this.selectedSlot]);
-        }
-      },
-    });
+          if (canRedirect) {
+            this.router.navigate(['createNewBooking', this.selectedSlot]);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 
   sortRoutes() {

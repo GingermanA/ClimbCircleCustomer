@@ -1,7 +1,29 @@
-@import "~@swimlane/ngx-datatable/index.css";
-@import "~@swimlane/ngx-datatable/themes/material.scss";
-@import "~@swimlane/ngx-datatable/assets/icons.css";
+ion-grid {
+  background-color: #989aa2;
+}
+
+ion-card {
+  padding: 0;
+}
 
 .active {
-  border: 1px solid rgb(60, 24, 220) !important;
+  border: 1px solid #ff4961 !important;
+}
+
+.rating-easy {
+  padding: 4px;
+  background-color: green;
+  border-radius: 5px;
+}
+
+.rating-med {
+  padding: 4px;
+  background-color: yellow;
+  border-radius: 5px;
+}
+
+.rating-hard {
+  padding: 4px;
+  background-color: red;
+  border-radius: 5px;
 }

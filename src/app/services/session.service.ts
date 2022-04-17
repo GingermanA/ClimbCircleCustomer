@@ -43,4 +43,12 @@ export class SessionService {
   setPassword(password: string | undefined): void {
     sessionStorage['password'] = password;
   }
+
+  getPasses(): number {
+    return sessionStorage['passes'];
+  }
+
+  setPasses(passes: number | undefined): void {
+    sessionStorage['passes'] = passes;
+  }
 }

@@ -7,6 +7,8 @@ export class RouteReview {
   routeReviewId: number;
   content: string;
   rating: RouteRatingEnum;
+  datePosted: Date;
+  dateString: string;
   gym: Gym;
   route: Route;
   customer: Customer;
@@ -14,10 +16,12 @@ export class RouteReview {
   constructor(
     routeReviewId?: number,
     content?: string,
-    rating?: RouteRatingEnum
+    rating?: RouteRatingEnum,
+    datePosted?: Date
   ) {
     this.routeReviewId = routeReviewId;
     this.content = content;
     this.rating = rating;
+    this.datePosted = datePosted;
   }
 }

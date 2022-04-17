@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
         this.sessionService.setUsername(this.username);
         this.sessionService.setCurrentCustomer(customer);
         this.sessionService.setIsLogin(true);
+        this.sessionService.setPasses(customer.numOfPassesLeft);
         this.router.navigate(['/tabs']);
       },
       error: (error) => {

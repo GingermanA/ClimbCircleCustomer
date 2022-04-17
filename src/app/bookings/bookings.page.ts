@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { GymslotService } from '../services/gymslot.service';
 import { Gymslot } from '../models/gymslot';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-bookings',
@@ -10,6 +11,8 @@ import { Gymslot } from '../models/gymslot';
 })
 export class BookingsPage implements OnInit {
   gymSlots: Gymslot[];
+  gymImageUrl: string =
+    'http://localhost:8080/GP14-war/uploadedFiles/gym_profile_pictures/';
 
   constructor(private gymSlotService: GymslotService) {}
 
@@ -17,6 +20,12 @@ export class BookingsPage implements OnInit {
     this.gymSlotService.getGymSlotsForCustomer().subscribe({
       next: (response) => {
         this.gymSlots = response;
+
+        this.gymSlots.forEach((gymSlot) => {
+          gymSlot.gymEntity.profilePictureURL =
+            this.gymImageUrl + gymSlot.gymEntity.profilePictureURL;
+        });
+
         this.gymSlots.sort((a, b) => {
           if (a.date == b.date) {
             return (
@@ -28,6 +37,21 @@ export class BookingsPage implements OnInit {
           } else {
             return 1;
           }
+        });
+
+        this.gymSlots.forEach((gymSlot) => {
+          const date = gymSlot.date;
+          const dateParts = date
+            .toString()
+            .substring(0, 10)
+            .split('-')
+            .map(Number);
+          let newDate: Date = new Date(
+            dateParts[0],
+            dateParts[1] - 1,
+            dateParts[2] + 1
+          );
+          gymSlot.dateString = format(newDate, 'dd/MM/yyyy');
         });
       },
       error: (error) => {
@@ -41,6 +65,7 @@ export class BookingsPage implements OnInit {
     this.gymSlotService.getGymSlotsForCustomer().subscribe({
       next: (response) => {
         this.gymSlots = response;
+
         this.gymSlots.sort((a, b) => {
           if (a.date == b.date) {
             return (
@@ -52,6 +77,21 @@ export class BookingsPage implements OnInit {
           } else {
             return 1;
           }
+        });
+
+        this.gymSlots.forEach((gymSlot) => {
+          const date = gymSlot.date;
+          const dateParts = date
+            .toString()
+            .substring(0, 10)
+            .split('-')
+            .map(Number);
+          let newDate: Date = new Date(
+            dateParts[0],
+            dateParts[1] - 1,
+            dateParts[2] + 1
+          );
+          gymSlot.dateString = format(newDate, 'dd/MM/yyyy');
         });
       },
       error: (error) => {

@@ -1,24 +1,140 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{route?.routeName}}</ion-title>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item> {{route?.description}} </ion-item>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="route" [style.background-color]="route?.color">
+      <h2 style="color: white">{{route?.routeName}}</h2>
+    </ion-row>
+    <ion-row class="route">
+      <p>{{route?.description}}</p>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col class="cell">Color</ion-col>
+      <ion-col class="cell">Location</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="cell">{{route?.color}}</ion-col>
+      <ion-col class="cell">{{route?.location}}</ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col class="center">Gym Rating</ion-col>
+      <ion-col class="center">User Rating</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="center" id="gymRating">
+        <ion-label
+          *ngIf="route?.routeRating == enums.RouteRatingEnum.VB || route?.routeRating == enums.RouteRatingEnum.V0to1 || route?.routeRating == enums.RouteRatingEnum.V1to2"
+          class="rating-easy"
+          >{{route?.routeRating}}</ion-label
+        >
 
-  <ion-list>
-    <ion-list-header color="primary">
-      <ion-label>Route Reviews</ion-label>
-    </ion-list-header>
-    <ion-card *ngFor="let routeReview of routeReviews">
-      <ion-card-content> {{routeReview.content}} </ion-card-content>
-    </ion-card>
-  </ion-list>
+        <ion-label
+          *ngIf="route?.routeRating == enums.RouteRatingEnum.V2to4 || route?.routeRating == enums.RouteRatingEnum.V4to6"
+          class="rating-med"
+          >{{route?.routeRating}}</ion-label
+        >
+
+        <ion-label
+          *ngIf="route?.routeRating == enums.RouteRatingEnum.V6to8 || route?.routeRating == enums.RouteRatingEnum.aboveV8"
+          class="rating-hard"
+          >{{route?.routeRating}}</ion-label
+        >
+      </ion-col>
+      <ion-col class="center" id="userRating">
+        <ion-label
+          *ngIf="userRating == enums.RouteRatingEnum.VB || userRating == enums.RouteRatingEnum.V0to1 || userRating == enums.RouteRatingEnum.V1to2"
+          class="rating-easy"
+          >{{userRating}}</ion-label
+        >
+
+        <ion-label
+          *ngIf="userRating == enums.RouteRatingEnum.V2to4 || userRating == enums.RouteRatingEnum.V4to6"
+          class="rating-med"
+          >{{userRating}}</ion-label
+        >
+
+        <ion-label
+          *ngIf="userRating == enums.RouteRatingEnum.V6to8 || userRating == enums.RouteRatingEnum.aboveV8"
+          class="rating-hard"
+          >{{userRating}}</ion-label
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="whitespace"></div>
+
+  <ion-accordion-group multiple="true">
+    <ion-accordion>
+      <ion-item slot="header" color="danger">
+        <ion-label>User Rating Summary</ion-label>
+      </ion-item>
+      <ion-list slot="content" class="ion-no-padding">
+        <ion-item *ngFor="let key of routeRatings">
+          <ion-range
+            style="pointer-events: none"
+            min="0"
+            max="100"
+            [value]="(key[1] / numOfRatings) * 100"
+          >
+            <ion-label slot="start">{{key[0]}}</ion-label>
+            <ion-label slot="end"
+              >{{Math.floor((key[1] / numOfRatings) * 100)}}%</ion-label
+            >
+          </ion-range>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+
+    <ion-accordion>
+      <ion-item slot="header" color="danger">
+        <ion-label>Route Reviews</ion-label>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-card *ngFor="let routeReview of routeReviews">
+          <ion-card-content>
+            <h2
+              *ngIf="routeReview.rating == enums.RouteRatingEnum.VB || routeReview.rating == enums.RouteRatingEnum.V0to1 || routeReview.rating == enums.RouteRatingEnum.V1to2"
+              class="rating-easy"
+            >
+              {{routeReview.rating}}
+            </h2>
+
+            <h2
+              *ngIf="routeReview.rating == enums.RouteRatingEnum.V2to4 || routeReview.rating == enums.RouteRatingEnum.V4to6"
+              class="rating-med"
+            >
+              {{routeReview.rating}}
+            </h2>
+
+            <h2
+              *ngIf="routeReview.rating == enums.RouteRatingEnum.V6to8 || routeReview.rating == enums.RouteRatingEnum.aboveV8"
+              class="rating-hard"
+            >
+              {{routeReview.rating}}
+            </h2>
+            <p>
+              {{routeReview.customer.username}} on {{routeReview.dateString}}
+            </p>
+            <p id="content">{{routeReview.content}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
+  <ion-toolbar color="medium">
+    <div class="center">
+      <ion-button color="danger" (click)="addReview()">Add a Review</ion-button>
+    </div>
   </ion-toolbar>
 </ion-footer>
