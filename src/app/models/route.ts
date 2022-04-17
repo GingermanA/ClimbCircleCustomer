@@ -1,3 +1,4 @@
+import { Gym } from './gym';
 import { RouteRatingEnum } from './route-rating-enum';
 import { RouteReview } from './route-review';
 
@@ -9,6 +10,7 @@ export class Route {
   routeImageURL: string;
   location: string;
   color: string;
+  gym: Gym;
   routeReviews: RouteReview[];
 
   constructor(

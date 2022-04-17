@@ -8,6 +8,7 @@ export class RouteReview {
   content: string;
   rating: RouteRatingEnum;
   datePosted: Date;
+  dateString: string;
   gym: Gym;
   route: Route;
   customer: Customer;

@@ -1,15 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>create-route-review</ion-title>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/routes/{{routeId}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Route Review</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
+<ion-content color="dark">
+  <ion-item color="dark">
     <ion-label>Rating</ion-label>
+    <ion-select placeholder="Select One" [(ngModel)]="selectedRating">
+      <ion-select-option *ngFor="let key of routeRatingKeys" value="{{key}}"
+        >{{key}}
+      </ion-select-option>
+    </ion-select>
   </ion-item>
 
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col size="3" *ngFor="let key of routeRatingKeys">
         <ion-label
@@ -37,15 +45,18 @@
         >
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
-  <ion-textarea
-    placeholder="Add a review here!"
-    [(ngModel)]="routeReview.content"
-    required
-    rows="10"
-  >
-  </ion-textarea>
+  <ion-item color="dark">
+    <ion-textarea
+      lines="none"
+      placeholder="Add a review here!"
+      [(ngModel)]="routeReview.content"
+      required
+      rows="10"
+    >
+    </ion-textarea>
+  </ion-item>
 
-  <ion-button (click)="createReview()">Create Review</ion-button>
+  <ion-button expand="block" (click)="createReview()">Create Review</ion-button>
 </ion-content>

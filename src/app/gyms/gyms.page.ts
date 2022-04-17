@@ -157,15 +157,15 @@ export class GymsPage implements OnInit {
               break;
             }
           }
+
+          if (canRedirect) {
+            this.router.navigate(['createNewBooking', this.selectedSlot]);
+          }
         },
         error: (error) => {
           console.log(error);
         },
       });
-    }
-
-    if (canRedirect) {
-      this.router.navigate(['createNewBooking', this.selectedSlot]);
     }
   }
 

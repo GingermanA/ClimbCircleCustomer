@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="medium">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
@@ -8,10 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <img src="{{gymImageUrl}}" />
-    </ion-item>
+  <ion-list class="ion-no-padding">
+    <img src="{{gymImageUrl}}" />
+
     <ion-item>
       <ion-label class="ion-text-wrap">Address: {{gym?.address}}</ion-label>
     </ion-item>
@@ -23,7 +22,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-segment value="routes" [(ngModel)]="type">
+  <ion-segment value="routes" [(ngModel)]="type" color="danger">
     <ion-segment-button value="routes">
       <ion-label>Routes</ion-label>
     </ion-segment-button>
@@ -35,16 +34,14 @@
   <div [ngSwitch]="type">
     <div id="slots" *ngSwitchCase="'slots'">
       <ion-datetime
+        color="danger"
         size="cover"
         [min]="minDate"
         presentation="date"
         (ionChange)="dateChanged($event)"
       ></ion-datetime>
 
-      <ion-list *ngFor="let gymSlot of gymSlots">
-        <!-- <ion-list-header color="primary">
-          <ion-label>Slots</ion-label>
-        </ion-list-header> -->
+      <ion-list *ngFor="let gymSlot of gymSlots" class="ion-no-padding">
         <ion-card
           *ngIf="gymSlot.vacancies > 0 && (gymSlot.date > minDate || gymSlot.startTime > currTime)"
           (click)="onClick(gymSlot.gymSlotId)"
@@ -64,7 +61,7 @@
     </div>
 
     <div id="routes" *ngSwitchCase="'routes'">
-      <ion-item>
+      <ion-item color="danger">
         <ion-label>Sort Routes by Rating</ion-label>
         <ion-select [(ngModel)]="sort" (ionChange)="sortRoutes()">
           <ion-select-option [value]="0">--Select Order--</ion-select-option>
@@ -76,14 +73,18 @@
       <ion-grid>
         <ion-row>
           <ion-col size="6" *ngFor="let route of routes">
-            <ion-card (click)="redirect(route.routeId)">
+            <ion-item (click)="redirect(route.routeId)" detail="true">
+              <ion-label>{{route.routeName}}</ion-label>
+            </ion-item>
+
+            <!-- <ion-card (click)="redirect(route.routeId)">
               <ion-card-header>
                 <ion-card-title>{{route.routeName}}</ion-card-title>
                 <ion-card-subtitle
                   >Rating: {{route.routeRating}}</ion-card-subtitle
                 >
               </ion-card-header>
-            </ion-card>
+            </ion-card> -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -136,8 +137,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-button slot="end" *ngIf="selectedSlot > 0" (click)="bookSlot()"
+  <ion-toolbar color="medium">
+    <ion-button
+      color="danger"
+      slot="end"
+      *ngIf="selectedSlot > 0"
+      (click)="bookSlot()"
       >Book Slot</ion-button
     >
   </ion-toolbar>

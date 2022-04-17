@@ -1,3 +1,7 @@
+.whitespace {
+  height: 5%;
+}
+
 .route {
   display: flex;
   justify-content: center;
@@ -44,4 +48,17 @@
 
 #gymRating {
   border-right-style: dotted;
+}
+
+#content {
+  color: black;
+}
+
+h2 {
+  display: inline-block;
+  color: black;
+}
+
+p {
+  font-size: larger;
 }

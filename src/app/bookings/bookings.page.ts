@@ -11,6 +11,8 @@ import { format } from 'date-fns';
 })
 export class BookingsPage implements OnInit {
   gymSlots: Gymslot[];
+  gymImageUrl: string =
+    'http://localhost:8080/GP14-war/uploadedFiles/gym_profile_pictures/';
 
   constructor(private gymSlotService: GymslotService) {}
 
@@ -18,6 +20,11 @@ export class BookingsPage implements OnInit {
     this.gymSlotService.getGymSlotsForCustomer().subscribe({
       next: (response) => {
         this.gymSlots = response;
+
+        this.gymSlots.forEach((gymSlot) => {
+          gymSlot.gymEntity.profilePictureURL =
+            this.gymImageUrl + gymSlot.gymEntity.profilePictureURL;
+        });
 
         this.gymSlots.sort((a, b) => {
           if (a.date == b.date) {
