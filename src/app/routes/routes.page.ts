@@ -97,6 +97,7 @@ export class RoutesPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.numOfRatings = 0;
     this.routeService.getRouteById(this.routeId).subscribe({
       next: (response) => {
         this.route = response;
@@ -124,29 +125,31 @@ export class RoutesPage implements OnInit {
           );
           routeReview.dateString = format(newDate, 'dd/MM/yyyy');
         });
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
 
-    this.routeReviewService.getRouteRatingsForRoute(this.routeId).subscribe({
-      next: (response) => {
-        this.routeRatings = response;
+        this.routeReviewService
+          .getRouteRatingsForRoute(this.routeId)
+          .subscribe({
+            next: (response) => {
+              this.routeRatings = response;
 
-        //aggregating results
-        let highestCount: number = 0;
-        for (let i = 0; i < this.routeRatings.length; i++) {
-          let rating: RouteRatingEnum = this.routeRatings[i][0];
-          let count: number = this.routeRatings[i][1];
+              //aggregating results
+              let highestCount: number = 0;
+              for (let i = 0; i < this.routeRatings.length; i++) {
+                let rating: RouteRatingEnum = this.routeRatings[i][0];
+                let count: number = this.routeRatings[i][1];
 
-          this.numOfRatings += count;
+                this.numOfRatings += count;
 
-          if (count > highestCount) {
-            highestCount = count;
-            this.userRating = rating;
-          }
-        }
+                if (count > highestCount) {
+                  highestCount = count;
+                  this.userRating = rating;
+                }
+              }
+            },
+            error: (error) => {
+              console.log(error);
+            },
+          });
       },
       error: (error) => {
         console.log(error);

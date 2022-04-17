@@ -4,6 +4,7 @@ import { SubscriptionPlan } from '../models/subscription-plan';
 import { CustomerService } from '../services/customer.service';
 import { SessionService } from '../services/session.service';
 import { SubscriptionPlanService } from '../services/subscription-plan.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-membership',
@@ -18,7 +19,8 @@ export class MembershipPage implements OnInit {
   constructor(
     private sessionService: SessionService,
     private customerService: CustomerService,
-    private subscriptionPlanService: SubscriptionPlanService
+    private subscriptionPlanService: SubscriptionPlanService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -32,8 +34,8 @@ export class MembershipPage implements OnInit {
       },
     });
 
-    console.log(this.sessionService.getPasses());
-    console.log(this.sessionService.getSubscriptionPlan());
+    // console.log(this.sessionService.getPasses());
+    // console.log(this.sessionService.getSubscriptionPlan());
 
     this.subscriptionPlanService.getSubscriptionPlans().subscribe({
       next: (response) => {
@@ -56,8 +58,8 @@ export class MembershipPage implements OnInit {
       },
     });
 
-    console.log(this.sessionService.getPasses());
-    console.log(this.sessionService.getSubscriptionPlan());
+    // console.log(this.sessionService.getPasses());
+    // console.log(this.sessionService.getSubscriptionPlan());
 
     this.subscriptionPlanService.getSubscriptionPlans().subscribe({
       next: (response) => {
@@ -80,9 +82,10 @@ export class MembershipPage implements OnInit {
       .renewMembership(this.customer, this.selectedPlan)
       .subscribe({
         next: (response) => {
-          console.log(response);
-          this.sessionService.setCurrentCustomer(response);
-          this.sessionService.setPasses(response.numOfPassesLeft);
+          // console.log(response);
+          // this.sessionService.setCurrentCustomer(response);
+          // this.sessionService.setPasses(response.numOfPassesLeft);
+          //this.router.navigate['tabs/membership'];
         },
         error: (error) => {
           console.log(error);

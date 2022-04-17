@@ -42,7 +42,7 @@ export class EditProfilePage implements OnInit {
 
       this.customerService.updateCustomer(this.customerToUpdate).subscribe({
         next: (response) => {
-          this.sessionService.setCurrentCustomer(response);
+          //this.sessionService.setCurrentCustomer(response);
           this.router.navigate(['tabs/profile']);
         },
         error: (error) => {

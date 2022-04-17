@@ -31,6 +31,17 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.customerService.getCustomer().subscribe({
+      next: (response) => {
+        this.customer = response;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
   editProfile() {
     this.router.navigate(['edit-profile']);
   }
