@@ -3,18 +3,21 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
-    <ion-title></ion-title>
+    <ion-title>{{route?.routeName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row class="route" [style.background-color]="route?.color">
-      <h2 style="color: white">{{route?.routeName}}</h2>
+      <p style="color: white">{{route?.description}}</p>
     </ion-row>
-    <ion-row class="route">
+    <ion-row>
+      <img src="{{routeImageUrl + route?.routeImageURL}}" />
+    </ion-row>
+    <!-- <ion-row class="route">
       <p>{{route?.description}}</p>
-    </ion-row>
+    </ion-row> -->
     <!-- <ion-row>
       <ion-col class="cell">Color</ion-col>
       <ion-col class="cell">Location</ion-col>

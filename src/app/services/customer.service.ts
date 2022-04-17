@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { SessionService } from './session.service';
 
 import { Customer } from '../models/customer';
 import { CreateCustomerRequest } from '../models/create-customer-request';
@@ -19,11 +20,16 @@ const httpOptions = {
 export class CustomerService {
   baseUrl: string = '/api/Customer';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {}
 
-  getCustomers(): Observable<Customer[]> {
+  getCustomer(): Observable<Customer> {
     return this.httpClient
-      .get<Customer[]>(this.baseUrl + '/retrieveAllCustomers')
+      .get<Customer>(
+        this.baseUrl + '/retrieveCustomer/' + this.sessionService.getUsername()
+      )
       .pipe(catchError(this.handleError));
   }
 

@@ -24,6 +24,8 @@ export class RoutesPage implements OnInit {
   userRating: RouteRatingEnum;
   numOfRatings: number = 0;
   Math = Math;
+  routeImageUrl: string =
+    'http://localhost:8080/GP14-war/uploadedFiles/route_pictures/';
 
   constructor(
     public enums: EnumsService,

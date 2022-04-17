@@ -1,9 +1,32 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="medium">
     <ion-title>profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color="medium">
+  <ion-grid>
+    <ion-row class="center">
+      <h2>{{customer?.username}}</h2>
+    </ion-row>
+    <ion-row class="center">
+      <ion-icon color="danger" name="person-circle"></ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-col class="center">Bookings</ion-col>
+      <ion-col class="center">Reviews</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="center">{{customer?.gymSlots.length}}</ion-col>
+      <ion-col class="center">{{customer?.routeReviews.length}}</ion-col>
+    </ion-row>
+    <ion-row class="buttons">
+      <ion-button color="danger" (click)="editProfile()"
+        >Edit Profile</ion-button
+      >
+    </ion-row>
+    <ion-row class="buttons">
+      <ion-button color="danger" (click)="logout()"> Logout </ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

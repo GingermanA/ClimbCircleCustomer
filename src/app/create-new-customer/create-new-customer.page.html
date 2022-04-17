@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create Customer</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,11 +23,11 @@
   <ion-item color="dark">
     <ion-label position="floating">Password</ion-label>
     <ion-input
-    type="text"
-    id="password"
-    name="password"
-    [(ngModel)]="customer.password"
-    required
+      type="text"
+      id="password"
+      name="password"
+      [(ngModel)]="customer.password"
+      required
     >
     </ion-input>
   </ion-item>
@@ -65,27 +65,25 @@
   <ion-content color="dark">
     <ion-item color="dark">
       <ion-label position="floating">Credit Card Number</ion-label>
-      <ion-input type="text" id="cardNum" required>
-      </ion-input>
-    </ion-item>
-  
-    <ion-item color="dark">
-      <ion-label position="floating">CVV</ion-label>
-      <ion-input type="text" id="cvv" required>
-      </ion-input>
-    </ion-item>
-  
-    <ion-item color="dark">
-      <ion-label position="floating">Expiry Date</ion-label>
-      <ion-input type="text" id="expDate" required>
-      </ion-input>
+      <ion-input type="text" id="cardNum" required> </ion-input>
     </ion-item>
 
-  <ion-button
-    color="medium"
-    expand="block"
-    fill="outline"
-    (click) = "createCustomer()"
-  >Create your ClimbCircle Account Now!
-  </ion-button>
+    <ion-item color="dark">
+      <ion-label position="floating">CVV</ion-label>
+      <ion-input type="text" id="cvv" required> </ion-input>
+    </ion-item>
+
+    <ion-item color="dark">
+      <ion-label position="floating">Expiry Date</ion-label>
+      <ion-input type="text" id="expDate" required> </ion-input>
+    </ion-item>
+
+    <ion-button
+      color="medium"
+      expand="block"
+      fill="outline"
+      (click)="createCustomer()"
+      >Create your ClimbCircle Account Now!
+    </ion-button>
+  </ion-content>
 </ion-content>

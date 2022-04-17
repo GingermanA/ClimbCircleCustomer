@@ -74,6 +74,20 @@ const routes: Routes = [
         (m) => m.CreateRouteReviewPageModule
       ),
   },
+  {
+    path: 'edit-profile',
+    loadChildren: () =>
+      import('./edit-profile/edit-profile.module').then(
+        (m) => m.EditProfilePageModule
+      ),
+  },
+  {
+    path: 'edit-profile/:username',
+    loadChildren: () =>
+      import('./edit-profile/edit-profile.module').then(
+        (m) => m.EditProfilePageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

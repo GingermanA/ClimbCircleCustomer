@@ -42,9 +42,11 @@ export class CreateNewCustomerPage implements OnInit {
         next: (response) => {
           let newCustomerId: number = response;
           console.log(newCustomerId);
-          
+
           this.message =
             'New customer ' + newCustomerId + ' created successfully';
+
+          this.router.navigate(['']);
         },
         error: (error) => {
           this.message =
@@ -55,6 +57,3 @@ export class CreateNewCustomerPage implements OnInit {
       });
   }
 }
-
-  
-

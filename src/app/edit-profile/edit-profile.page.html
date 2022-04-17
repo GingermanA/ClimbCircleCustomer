@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit-profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-item color="dark">
+    <ion-label>Username</ion-label>
+    <ion-label>{{customer.username}}</ion-label>
+    <!-- <ion-input
+      type="text"
+      id="username"
+      name="username"
+      [(ngModel)]="customer.username"
+      required
+    >
+    </ion-input> -->
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label>Old Password</ion-label>
+
+    <ion-input
+      slot="end"
+      type="text"
+      id="password"
+      name="password"
+      [(ngModel)]="oldPassword"
+      required
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label>New Password</ion-label>
+
+    <ion-input
+      slot="end"
+      type="text"
+      id="password"
+      name="password"
+      [(ngModel)]="newPassword"
+      required
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label>Email</ion-label>
+    <ion-input
+      slot="end"
+      type="text"
+      id="email"
+      name="email"
+      [(ngModel)]="customer.email"
+      required
+    >
+    </ion-input>
+  </ion-item>
+  <ion-button (click)="save()">Save Changes</ion-button>
+</ion-content>

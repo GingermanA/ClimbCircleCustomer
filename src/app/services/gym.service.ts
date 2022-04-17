@@ -31,7 +31,13 @@ export class GymService {
 
   getGymDetails(gymId: number): Observable<Gym> {
     return this.httpClient
-      .get<Gym>(this.baseUrl + '/retrieveGym/' + gymId)
+      .get<Gym>(this.baseUrl + '/retrieveGymById/' + gymId)
+      .pipe(catchError(this.handleError));
+  }
+
+  getGymForBooking(username: string): Observable<Gym> {
+    return this.httpClient
+      .get<Gym>(this.baseUrl + '/retrieveGymByUsername/' + username)
       .pipe(catchError(this.handleError));
   }
 

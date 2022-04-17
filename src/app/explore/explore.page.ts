@@ -31,10 +31,4 @@ export class ExplorePage implements OnInit {
       },
     });
   }
-
-  logout() {
-    this.sessionService.setIsLogin(false);
-    this.sessionService.setCurrentCustomer(null);
-    this.router.navigate(['/login']);
-  }
 }
