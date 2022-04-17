@@ -6,6 +6,7 @@ import { RouteReview } from '../models/route-review';
 
 import { EnumsService } from '../services/enums.service';
 import { RouteRatingEnum } from '../models/route-rating-enum';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-create-route-review',
@@ -22,7 +23,8 @@ export class CreateRouteReviewPage implements OnInit {
     public enums: EnumsService,
     private activatedRoute: ActivatedRoute,
     private routeReviewService: RouteReviewService,
-    private router: Router
+    private router: Router,
+    private sessionService: SessionService
   ) {
     this.routeReview = new RouteReview();
   }
@@ -45,6 +47,8 @@ export class CreateRouteReviewPage implements OnInit {
       .createRouteReview(this.routeReview, this.routeId)
       .subscribe({
         next: (response) => {
+          let review: number = this.sessionService.getReviews();
+          this.sessionService.setReviews(+review + 1);
           this.router.navigate(['routes', this.routeId]);
         },
         error: (error) => {

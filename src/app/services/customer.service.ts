@@ -52,18 +52,11 @@ export class CustomerService {
     // let updateCustomerReq: UpdateCustomerRequest = new UpdateCustomerRequest(this.sessionService.getCurrentCustomer(), new SubscriptionPlan(1, "Premium", 10) );
 
     return this.httpClient
-      .post<Customer>(
-        this.baseUrl + '/editProfile',
-        customerToUpdate,
-        httpOptions
-      )
+      .post<any>(this.baseUrl + '/editProfile', customerToUpdate, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  renewMembership(
-    customerToUpdate: Customer,
-    subscriptionPlan: string
-  ): Observable<Customer> {
+  renewMembership(subscriptionPlan: string): Observable<Customer> {
     let renewMembershipRequest: RenewMembershipRequest =
       new RenewMembershipRequest(
         this.sessionService.getCurrentCustomer(),
@@ -71,7 +64,7 @@ export class CustomerService {
       );
 
     return this.httpClient
-      .post<Customer>(
+      .post<any>(
         this.baseUrl + '/renewMembership',
         renewMembershipRequest,
         httpOptions

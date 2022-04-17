@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
   customer: Customer;
+  username: string;
+  reviews: number;
 
   constructor(
     private customerService: CustomerService,
@@ -21,6 +23,7 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.reviews = this.sessionService.getReviews();
     this.customerService.getCustomer().subscribe({
       next: (response) => {
         this.customer = response;
@@ -32,6 +35,7 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.reviews = this.sessionService.getReviews();
     this.customerService.getCustomer().subscribe({
       next: (response) => {
         this.customer = response;
@@ -49,6 +53,10 @@ export class ProfilePage implements OnInit {
   logout() {
     this.sessionService.setIsLogin(false);
     this.sessionService.setCurrentCustomer(null);
+    this.sessionService.setPasses(0);
+    this.sessionService.setPassword('');
+    this.sessionService.setUsername('');
+    this.sessionService.setReviews(0);
     this.router.navigate(['/login']);
   }
 }

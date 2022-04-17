@@ -1,4 +1,5 @@
 import { Gymslot } from './gymslot';
+import { RouteReview } from './route-review';
 import { SubscriptionPlan } from './subscription-plan';
 
 export class Customer {
@@ -9,6 +10,7 @@ export class Customer {
   numOfPassesLeft: number | undefined;
   expiryDate: Date | undefined;
   gymSlots: Gymslot[] | undefined;
+  routeReviews: RouteReview[] | undefined;
   subscriptionPlan: SubscriptionPlan | undefined;
 
   constructor(

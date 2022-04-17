@@ -33,6 +33,7 @@ export class LoginPage implements OnInit {
         this.sessionService.setIsLogin(true);
         this.sessionService.setPasses(customer.numOfPassesLeft);
         this.sessionService.setSubscriptionPlan(customer.subscriptionPlan.name);
+        this.sessionService.setReviews(customer.routeReviews.length);
         this.router.navigate(['/tabs']);
       },
       error: (error) => {

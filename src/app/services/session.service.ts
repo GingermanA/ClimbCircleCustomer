@@ -60,4 +60,12 @@ export class SessionService {
   setSubscriptionPlan(subscriptionPlan: string | undefined): void {
     sessionStorage['subscriptionPlan'] = subscriptionPlan;
   }
+
+  getReviews(): number {
+    return sessionStorage['reviews'];
+  }
+
+  setReviews(reviews: number | undefined): void {
+    sessionStorage['reviews'] = reviews;
+  }
 }

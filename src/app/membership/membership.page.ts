@@ -15,6 +15,9 @@ export class MembershipPage implements OnInit {
   customer: Customer;
   subscriptionPlans: SubscriptionPlan[];
   selectedPlan: string;
+  passesToAdd: number;
+  passes: number;
+  subscriptionPlan: string;
 
   constructor(
     private sessionService: SessionService,
@@ -24,18 +27,20 @@ export class MembershipPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.customerService.getCustomer().subscribe({
-      next: (response) => {
-        this.customer = response;
-        this.selectedPlan = this.customer.subscriptionPlan.name;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    // this.customerService.getCustomer().subscribe({
+    //   next: (response) => {
+    //     this.customer = response;
+    //     this.selectedPlan = this.customer.subscriptionPlan.name;
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
 
-    // console.log(this.sessionService.getPasses());
-    // console.log(this.sessionService.getSubscriptionPlan());
+    this.customer = this.sessionService.getCurrentCustomer();
+
+    this.passes = this.sessionService.getPasses();
+    this.subscriptionPlan = this.sessionService.getSubscriptionPlan();
 
     this.subscriptionPlanService.getSubscriptionPlans().subscribe({
       next: (response) => {
@@ -48,18 +53,7 @@ export class MembershipPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.customerService.getCustomer().subscribe({
-      next: (response) => {
-        this.customer = response;
-        this.selectedPlan = this.customer.subscriptionPlan.name;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-
-    // console.log(this.sessionService.getPasses());
-    // console.log(this.sessionService.getSubscriptionPlan());
+    this.customer = this.sessionService.getCurrentCustomer();
 
     this.subscriptionPlanService.getSubscriptionPlans().subscribe({
       next: (response) => {
@@ -69,28 +63,30 @@ export class MembershipPage implements OnInit {
         console.log(error);
       },
     });
+
+    // console.log(this.sessionService.getPasses());
+    // console.log(this.sessionService.getSubscriptionPlan());
   }
 
-  onClick(plan: string) {
-    this.selectedPlan = plan;
+  onClick(plan: SubscriptionPlan) {
+    this.selectedPlan = plan.name;
+    this.passesToAdd = plan.numOfPasses;
     console.log(this.selectedPlan);
   }
 
   renew() {
     //this.sessionService.setSubscriptionPlan(this.selectedPlan);
-    this.customerService
-      .renewMembership(this.customer, this.selectedPlan)
-      .subscribe({
-        next: (response) => {
-          // console.log(response);
-          // this.sessionService.setCurrentCustomer(response);
-          // this.sessionService.setPasses(response.numOfPassesLeft);
-          //this.router.navigate['tabs/membership'];
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+    this.customerService.renewMembership(this.selectedPlan).subscribe({
+      next: (response) => {
+        let passes = +this.passes + +this.passesToAdd;
+        this.sessionService.setSubscriptionPlan(this.selectedPlan);
+        this.sessionService.setPasses(passes);
+        location.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 
   // renewMembership(){
