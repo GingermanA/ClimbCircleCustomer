@@ -26,12 +26,13 @@ export class LoginPage implements OnInit {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         let customer: Customer = response;
+        console.log(customer.subscriptionPlan);
         this.sessionService.setUsername(this.username);
         this.sessionService.setPassword(this.password);
         this.sessionService.setCurrentCustomer(customer);
         this.sessionService.setIsLogin(true);
         this.sessionService.setPasses(customer.numOfPassesLeft);
-        this.sessionService.setSubscription(customer.subscriptionPlan);
+        this.sessionService.setSubscriptionPlan(customer.subscriptionPlan.name);
         this.router.navigate(['/tabs']);
       },
       error: (error) => {

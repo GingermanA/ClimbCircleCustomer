@@ -96,6 +96,64 @@ export class RoutesPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.routeService.getRouteById(this.routeId).subscribe({
+      next: (response) => {
+        this.route = response;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+
+    this.routeReviewService.getRouteReviewsForRoute(this.routeId).subscribe({
+      next: (response) => {
+        this.routeReviews = response.reverse();
+
+        this.routeReviews.forEach((routeReview) => {
+          const date = routeReview.datePosted;
+          const dateParts = date
+            .toString()
+            .substring(0, 10)
+            .split('-')
+            .map(Number);
+          let newDate: Date = new Date(
+            dateParts[0],
+            dateParts[1] - 1,
+            dateParts[2]
+          );
+          routeReview.dateString = format(newDate, 'dd/MM/yyyy');
+        });
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+
+    this.routeReviewService.getRouteRatingsForRoute(this.routeId).subscribe({
+      next: (response) => {
+        this.routeRatings = response;
+
+        //aggregating results
+        let highestCount: number = 0;
+        for (let i = 0; i < this.routeRatings.length; i++) {
+          let rating: RouteRatingEnum = this.routeRatings[i][0];
+          let count: number = this.routeRatings[i][1];
+
+          this.numOfRatings += count;
+
+          if (count > highestCount) {
+            highestCount = count;
+            this.userRating = rating;
+          }
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
   addReview() {
     this.router.navigate(['createRouteReview', this.routeId]);
   }

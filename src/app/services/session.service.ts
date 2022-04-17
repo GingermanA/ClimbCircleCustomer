@@ -53,11 +53,11 @@ export class SessionService {
     sessionStorage['passes'] = passes;
   }
 
-  getSubscription(): SubscriptionPlan {
-    return sessionStorage['subscription'];
+  getSubscriptionPlan(): string {
+    return sessionStorage['subscriptionPlan'];
   }
 
-  setSubscription(subscription: SubscriptionPlan | undefined): void {
-    sessionStorage['subscription'] = subscription;
+  setSubscriptionPlan(subscriptionPlan: string | undefined): void {
+    sessionStorage['subscriptionPlan'] = subscriptionPlan;
   }
 }

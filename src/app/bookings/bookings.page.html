@@ -8,9 +8,8 @@
   <ion-list class="ion-no-padding">
     <ion-list-header color="medium"> Upcoming Bookings </ion-list-header>
     <ion-item *ngFor="let gymSlot of gymSlots">
-      <ion-thumbnail slot="start">
-        <img src="{{gymSlot.gymEntity.profilePictureURL}}" />
-      </ion-thumbnail>
+      <ion-icon name="calendar"></ion-icon>
+
       <ion-label>
         <h2>{{gymSlot.gymEntity.gymName}}</h2>
 

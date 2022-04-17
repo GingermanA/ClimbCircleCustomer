@@ -1,6 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -58,5 +61,5 @@
     >
     </ion-input>
   </ion-item>
-  <ion-button (click)="save()">Save Changes</ion-button>
+  <ion-button expand="block" (click)="save()">Save Changes</ion-button>
 </ion-content>
